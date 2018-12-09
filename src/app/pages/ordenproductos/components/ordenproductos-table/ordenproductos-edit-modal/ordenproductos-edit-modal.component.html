@@ -1,0 +1,80 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Orden Producto</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Orden Producto">
+            <div class="form-group row" [ngClass]="{'has-error': (!orden_idordenAC.valid && orden_idordenAC.touched), 'has-success': (orden_idordenAC.valid && orden_idordenAC.touched)}">
+              <label for="inputorden_idordenAC" class="col-sm-3 form-control-label">Número de Orden</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="orden_idorden" [formControl]="orden_idordenAC" class="form-control" id="inputorden_idordenAC" required>
+                 <option value="{{item.idorden}}" *ngFor="let item of _orden">{{item.idorden}} - {{item.cliente_cliente_idcliente}} - {{item.comentarios}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='ordenAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!producto_idproductoAC.valid && producto_idproductoAC.touched), 'has-success': (producto_idproductoAC.valid && producto_idproductoAC.touched)}">
+              <label for="inputproducto_idproductoAC" class="col-sm-3 form-control-label">Producto</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="producto_idproducto" [formControl]="producto_idproductoAC" class="form-control" id="inputproducto_idproductoAC" required>
+                 <option value="{{item.idproducto}},{{item.formula_formula_idformula}}" *ngFor="let item of _producto">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='productoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!cantidadAC.valid && cantidadAC.touched), 'has-success': (cantidadAC.valid && cantidadAC.touched)}">
+              <label for="inputcantidadAC" class="col-sm-3 form-control-label">Cantidad Unidades</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="cantidad" [formControl]="cantidadAC" type="number" maxlength='4' class="form-control" id="inputcantidadAC" placeholder="Cantidad Unidades" >
+              </div>
+            </div>
+            <div *ngIf="withFormula" class="form-group row" [ngClass]="{'has-error': (!anchoAC.valid && anchoAC.touched), 'has-success': (anchoAC.valid && anchoAC.touched)}">
+              <label for="inputanchoAC" class="col-sm-3 form-control-label">Ancho en Metros</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="ancho" [formControl]="anchoAC" type="number"  class="form-control" id="inputanchoAC" placeholder="Ancho en Metros" >
+              </div>
+            </div>
+            <div *ngIf="withFormula" class="form-group row" [ngClass]="{'has-error': (!altoAC.valid && altoAC.touched), 'has-success': (altoAC.valid && altoAC.touched)}">
+              <label for="inputaltoAC" class="col-sm-3 form-control-label">Alto en Metros</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="alto" [formControl]="altoAC" type="number"  class="form-control" id="inputaltoAC" placeholder="Alto en Metros" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!tipoprecio_idtipoprecioAC.valid && tipoprecio_idtipoprecioAC.touched), 'has-success': (tipoprecio_idtipoprecioAC.valid && tipoprecio_idtipoprecioAC.touched)}">
+              <label for="inputtipoprecio_idtipoprecioAC" class="col-sm-3 form-control-label">Precio Para</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="tipoprecio_idtipoprecio" [formControl]="tipoprecio_idtipoprecioAC" class="form-control" id="inputtipoprecio_idtipoprecioAC" required>
+                 <option value="{{item.idtipoprecio}}" *ngFor="let item of _tipoprecio">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='tipoprecioAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!precioAC.valid && precioAC.touched), 'has-success': (precioAC.valid && precioAC.touched)}">
+              <label for="inputprecioAC" class="col-sm-3 form-control-label">Precio</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="precio" [formControl]="precioAC" type="number"  class="form-control" id="inputprecioAC" placeholder="Precio" required>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

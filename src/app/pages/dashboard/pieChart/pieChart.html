@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <h1>Órdenes Atrasadas</h1>
+  </div>
+</div>
+<div class="row pie-charts">
+  
+  <ba-card *ngFor="let chart of charts" class="pie-chart-item-container col-xlg-4 col-lg-4 col-md-6 col-sm-12 col-12">
+
+    <div class="pie-chart-item">
+      <div class="description">
+        <div>Orden: <strong>{{ chart.idorden }}</strong></div>
+        <div>Empleado: <strong>{{ chart.empleado }}</strong></div>
+        <div><small>Días de retraso: </small> <strong>{{ chart.dias_retraso }}</strong></div>
+        <div><small>Fecha estimada de entrega: </small> <strong>{{ chart.fechaEntregaEstimada }}</strong></div>
+        <div><small>Estado: </small> <strong>{{ chart.estado_estado_idestado }}</strong></div>
+      </div>
+      <i class="chart-icon i-money"></i>
+    </div>
+
+  </ba-card>
+</div>

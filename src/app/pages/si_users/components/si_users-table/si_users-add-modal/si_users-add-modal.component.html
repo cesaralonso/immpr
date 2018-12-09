@@ -1,0 +1,52 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Usuarios</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Usuarios">
+            <div class="form-group row" [ngClass]="{'has-error': (!usuarioAC.valid && usuarioAC.touched), 'has-success': (usuarioAC.valid && usuarioAC.touched)}">
+              <label for="inputusuarioAC" class="col-sm-3 form-control-label">Usuario</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="usuario" [formControl]="usuarioAC" type="text" maxlength='45' class="form-control" id="inputusuarioAC" placeholder="Usuario" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!emailAC.valid && emailAC.touched), 'has-success': (emailAC.valid && emailAC.touched)}">
+              <label for="inputemailAC" class="col-sm-3 form-control-label">Email</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="email" [formControl]="emailAC" type="email" maxlength='60' class="form-control" id="inputemailAC" placeholder="Email" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!passwordAC.valid && passwordAC.touched), 'has-success': (passwordAC.valid && passwordAC.touched)}">
+              <label for="inputpasswordAC" class="col-sm-3 form-control-label">Password</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="password" [formControl]="passwordAC" type="text" maxlength='60' class="form-control" id="inputpasswordAC" placeholder="Password" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!Rol_idsi_rolAC.valid && Rol_idsi_rolAC.touched), 'has-success': (Rol_idsi_rolAC.valid && Rol_idsi_rolAC.touched)}">
+              <label for="inputRol_idsi_rolAC" class="col-sm-3 form-control-label">Rol</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="Rol_idsi_rol" [formControl]="Rol_idsi_rolAC" class="form-control" id="inputRol_idsi_rolAC" required>
+                 <option value="{{item.idsi_rol}}" *ngFor="let item of _si_rol">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='si_rolAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

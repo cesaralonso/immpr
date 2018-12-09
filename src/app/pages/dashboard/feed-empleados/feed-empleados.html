@@ -1,0 +1,51 @@
+
+<h2 class="lead my-5 p-3">Mayor Tiempo Laborado</h2>
+<div class="feed-messages-container">
+  <div class="feed-message" *ngFor="let message of maseficientes" (click)="expandMessage(message)">
+    <div class="message-icon">
+      <i class="fa fa-check fa-x5"></i>
+    </div>
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author">Empleado: <strong>{{ message.empleado_empleado_idempleado }}</strong></span>
+      </div>
+      <div class="message-content line-clamp">
+        <span>Entrada: {{ message.horaEntrada }} </span> - <span>Salida: {{ message.horaSalida }}</span>
+      </div>
+      <div class="preview" >
+        <div class="ago-time text-success">
+          Eficiencia: {{ message.eficiencia }}
+        </div>
+        <div class="post-time">
+          Área: <strong>{{ message.area_area_idarea }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="lead my-5 p-3">Menor Tiempo Laborado</h2>
+<div class="feed-messages-container">
+  <div class="feed-message" *ngFor="let message of menoseficientes" (click)="expandMessage(message)">
+    <div class="message-icon">
+      <i class="fa fa-close fa-x5"></i>
+    </div>
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author">Empleado: <strong>{{ message.empleado_empleado_idempleado }}</strong></span>
+      </div>
+      <div class="message-content line-clamp">
+        <span>Entrada: {{ message.horaEntrada }} </span> - <span>Salida: {{ message.horaSalida }}</span>
+      </div>
+      <div class="preview text-danger">
+        <div class="ago-time">
+          Eficiencia: {{ message.eficiencia }}
+        </div>
+        <div class="post-time">
+          Área: <strong>{{ message.area_area_idarea }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

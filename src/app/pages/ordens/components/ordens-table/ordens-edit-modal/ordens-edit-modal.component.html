@@ -1,0 +1,106 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Orden</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Orden">
+            <div class="form-group row" [ngClass]="{'has-error': (!cliente_idclienteAC.valid && cliente_idclienteAC.touched), 'has-success': (cliente_idclienteAC.valid && cliente_idclienteAC.touched)}">
+              <label for="inputcliente_idclienteAC" class="col-sm-3 form-control-label">Cliente</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="cliente_idcliente" [formControl]="cliente_idclienteAC" class="form-control" id="inputcliente_idclienteAC" required>
+                 <option value="{{item.idcliente}}" *ngFor="let item of _cliente">{{item.persona_persona_idpersona}} {{item.razonsocial}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='clienteAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaAC.valid && fechaAC.touched), 'has-success': (fechaAC.valid && fechaAC.touched)}">
+              <label for="inputfechaAC" class="col-sm-3 form-control-label">Fecha</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fecha" [formControl]="fechaAC" type="date"  class="form-control" id="inputfechaAC" placeholder="Fecha" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaAC.valid && horaAC.touched), 'has-success': (horaAC.valid && horaAC.touched)}">
+              <label for="inputhoraAC" class="col-sm-3 form-control-label">Hora</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="hora" [formControl]="horaAC" type="time"  class="form-control" id="inputhoraAC" placeholder="Hora" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaEntregaEstimadaAC.valid && fechaEntregaEstimadaAC.touched), 'has-success': (fechaEntregaEstimadaAC.valid && fechaEntregaEstimadaAC.touched)}">
+              <label for="inputfechaEntregaEstimadaAC" class="col-sm-3 form-control-label">Fecha Estimada de Entrega</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaEntregaEstimada" [formControl]="fechaEntregaEstimadaAC" type="date"  class="form-control" id="inputfechaEntregaEstimadaAC" placeholder="Fecha Estimada de Entrega" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaEntregaEstimadaAC.valid && horaEntregaEstimadaAC.touched), 'has-success': (horaEntregaEstimadaAC.valid && horaEntregaEstimadaAC.touched)}">
+              <label for="inputhoraEntregaEstimadaAC" class="col-sm-3 form-control-label">Hora Estimada de Entrega</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaEntregaEstimada" [formControl]="horaEntregaEstimadaAC" type="time"  class="form-control" id="inputhoraEntregaEstimadaAC" placeholder="Hora Estimada de Entrega" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaEntregaRealAC.valid && fechaEntregaRealAC.touched), 'has-success': (fechaEntregaRealAC.valid && fechaEntregaRealAC.touched)}">
+              <label for="inputfechaEntregaRealAC" class="col-sm-3 form-control-label">Fecha Real de Entrega</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaEntregaReal" [formControl]="fechaEntregaRealAC" type="date"  class="form-control" id="inputfechaEntregaRealAC" placeholder="Fecha Real de Entrega" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaEntregaRealAC.valid && horaEntregaRealAC.touched), 'has-success': (horaEntregaRealAC.valid && horaEntregaRealAC.touched)}">
+              <label for="inputhoraEntregaRealAC" class="col-sm-3 form-control-label">Hora Real de Entrega</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaEntregaReal" [formControl]="horaEntregaRealAC" type="time"  class="form-control" id="inputhoraEntregaRealAC" placeholder="Hora Real de Entrega" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!subtotalAC.valid && subtotalAC.touched), 'has-success': (subtotalAC.valid && subtotalAC.touched)}">
+              <label for="inputsubtotalAC" class="col-sm-3 form-control-label">Subtotal</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="subtotal" [formControl]="subtotalAC" type="number"  class="form-control" id="inputsubtotalAC" placeholder="Subtotal" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!totalAC.valid && totalAC.touched), 'has-success': (totalAC.valid && totalAC.touched)}">
+              <label for="inputtotalAC" class="col-sm-3 form-control-label">Total</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="total" [formControl]="totalAC" type="number"  class="form-control" id="inputtotalAC" placeholder="Total" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!abonadoAC.valid && abonadoAC.touched), 'has-success': (abonadoAC.valid && abonadoAC.touched)}">
+              <label for="inputabonadoAC" class="col-sm-3 form-control-label">Monto Abonado</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="abonado" [formControl]="abonadoAC" type="number"  class="form-control" id="inputabonadoAC" placeholder="Monto Abonado" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!adeudoAC.valid && adeudoAC.touched), 'has-success': (adeudoAC.valid && adeudoAC.touched)}">
+              <label for="inputadeudoAC" class="col-sm-3 form-control-label">Monto Adeudado</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="adeudo" [formControl]="adeudoAC" type="number"  class="form-control" id="inputadeudoAC" placeholder="Monto Adeudado" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!facturaAC.valid && facturaAC.touched), 'has-success': (facturaAC.valid && facturaAC.touched)}">
+              <label for="inputfacturaAC" class="col-sm-3 form-check-label">Factura</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="factura" [formControl]="facturaAC" type="checkbox" class="form-check-input" id="inputfacturaAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!comentariosAC.valid && comentariosAC.touched), 'has-success': (comentariosAC.valid && comentariosAC.touched)}">
+              <label for="inputcomentariosAC" class="col-sm-3 form-check-label">Comentarios</label>
+              <div class="col-sm-9">
+               <textarea [(ngModel)]="comentarios" [formControl]="comentariosAC" class="form-control form-control-textarea" id="inputcomentariosAC"> </textarea>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

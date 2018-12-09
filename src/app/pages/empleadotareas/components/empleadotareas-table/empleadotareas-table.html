@@ -1,0 +1,410 @@
+
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Empleado Tarea</h2></div>
+                <table class='table table-striped'>
+                    <thead>
+                        <tr>
+                            <th class='text-left'>
+                                Filtrar por Empleado:
+                                <select class='form-control' name="empleado" id="empleado" [(ngModel)]='filterQuery1'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{empleado.persona_persona_idpersona}}" *ngFor="let empleado of _empleado">{{empleado.persona_persona_idpersona}}</option>
+                                </select>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Tarea:
+                                <select class='form-control' name="tarea" id="tarea" [(ngModel)]='filterQuery2'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{tarea.nombre}}" *ngFor="let tarea of _tarea">{{tarea.nombre}}</option>
+                                </select>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Estado:
+                                <select class='form-control' name="estadoscrum" id="estadoscrum" [(ngModel)]='filterQuery3'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{estadoscrum.nombre}}" *ngFor="let estadoscrum of _estadoscrum">{{estadoscrum.nombre}}</option>
+                                </select>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+
+    <div class='row'>
+        <div id="cajaPorHacer" (drop)="soltadoPorHacer($event)" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <h2 class="card-subtitle mb-2 text-muted">POR HACERSE</h2>
+            <div class="row">
+                <div id="{{item.idempleadotarea}}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 feed-messages-container dragable" [draggable]="true" (dragstart)="arrastrado($event)" (dragend)="finalizado($event)" style="padding-bottom: 25px;" 
+                *ngFor='let item of porhacerse | empleado_empleado_idempleadoDataFilter : filterQuery1 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery2 | estado_estado_idestadoDataFilter : filterQuery3;  let i = index'>
+                    <div class="card feed-message" >
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.ordentarea_ordentarea_idordentarea }}
+                                <span style="float: right;"> 
+                                    <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-xs btn-info'><i class='fa fa-edit'></i></button>
+                                    <button *ngIf='updateable' title='Cancelar Registro' (click)='onCancelConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-close'></i></button>
+                                    <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>
+                                    <button title='Desplegar más información' (click)="expandMessage(item)" class='btn btn-xs btn-default'><i class='fa fa-arrow-down'></i></button>
+                                </span>
+                            </h3>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <!--
+                                        <tr>
+                                            <td class="card-subtitle mb-2">
+                                                {{ item.estado_estado_idestado }}
+                                                <button title='Ver Estados' (click)='viewEmpleadotareaestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i></button>
+                                            </td>
+                                        </tr>
+                                        -->
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Empleado: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.empleado_empleado_idempleado }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha Entrega: </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2">
+                                                <strong>{{ item.fechaEstimada | date: 'dd/MM/y' }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="table" [ngClass]="{'hidden': !item.expanded}">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha de Inicio: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.fechaInicio | date: 'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Especificaciones: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.especificaciones }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <button title='Agregar Archivo' (click)='insertArchivo(item)' class='btn btn-xs btn-success'><i class='fa fa-plus'></i> Archivo</button>
+                            <button title='Ver Archivos' (click)='viewArchivo(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Archivos</button>
+                            <button title='Ver Estados' (click)='viewEmpleadotareaestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Estados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+        </div>
+
+        <div id="cajaTrabajando" (drop)="soltadoTrabajando($event)" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <h2 class="card-subtitle mb-2 text-muted">TRABAJANDO</h2>
+            <div class="row">
+                <div id="{{item.idempleadotarea}}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 feed-messages-container dragable" [draggable]="true" (dragstart)="arrastrado($event)" (dragend)="finalizado($event)" style="padding-bottom: 25px;"  
+                *ngFor='let item of trabajando | empleado_empleado_idempleadoDataFilter : filterQuery1 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery2 | estado_estado_idestadoDataFilter : filterQuery3;  let i = index'>
+                    <div class="card feed-message" >
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.ordentarea_ordentarea_idordentarea }}
+                                <span style="float: right;"> 
+                                    <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-xs btn-info'><i class='fa fa-edit'></i></button>
+                                    <button *ngIf='updateable' title='Cancelar Registro' (click)='onCancelConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-close'></i></button>
+                                    <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>
+                                    <button title='Desplegar más información' (click)="expandMessage(item)" class='btn btn-xs btn-default'><i class='fa fa-arrow-down'></i></button>
+                                </span>
+                            </h3>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Empleado: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.empleado_empleado_idempleado }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha Entrega: </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2">
+                                                <strong>{{ item.fechaEstimada | date: 'dd/MM/y' }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table" [ngClass]="{'hidden': !item.expanded}">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha de Inicio: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.fechaInicio | date: 'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Especificaciones: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.especificaciones }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <button title='Agregar Archivo' (click)='insertArchivo(item)' class='btn btn-xs btn-success'><i class='fa fa-plus'></i> Archivo</button>
+                            <button title='Ver Archivos' (click)='viewArchivo(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Archivos</button>
+                            <button title='Ver Estados' (click)='viewEmpleadotareaestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Estados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cajaHecha" (drop)="soltadoHecha($event)" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <h2 class="card-subtitle mb-2 text-muted">HECHAS</h2>
+            <div class="row">
+                <div id="{{item.idempleadotarea}}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 feed-messages-container dragable" [draggable]="true" (dragstart)="arrastrado($event)" (dragend)="finalizado($event)" style="padding-bottom: 25px;"  
+                    *ngFor='let item of hecha | empleado_empleado_idempleadoDataFilter : filterQuery1 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery2 | estado_estado_idestadoDataFilter : filterQuery3;  let i = index'>
+                    <div class="card feed-message" >
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.ordentarea_ordentarea_idordentarea }}
+                                <span style="float: right;"> 
+                                    <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-xs btn-info'><i class='fa fa-edit'></i></button>
+                                    <button *ngIf='updateable' title='Cancelar Registro' (click)='onCancelConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-close'></i></button>
+                                    <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>
+                                    <button title='Desplegar más información' (click)="expandMessage(item)" class='btn btn-xs btn-default'><i class='fa fa-arrow-down'></i></button>
+                                </span>
+                            </h3>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Empleado: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.empleado_empleado_idempleado }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha Entrega: </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2">
+                                                <strong>{{ item.fechaEstimada | date: 'dd/MM/y' }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table" [ngClass]="{'hidden': !item.expanded}">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha de Inicio: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.fechaInicio | date: 'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Especificaciones: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.especificaciones }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <button title='Agregar Archivo' (click)='insertArchivo(item)' class='btn btn-xs btn-success'><i class='fa fa-plus'></i> Archivo</button>
+                            <button title='Ver Archivos' (click)='viewArchivo(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Archivos</button>
+                            <button title='Ver Estados' (click)='viewEmpleadotareaestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Estados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div id="cajaCancelada" (drop)="soltadoCancelada($event)" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <h2 class="card-subtitle mb-2 text-muted">CANCELADAS</h2>
+            <div class="row">
+                <div id="{{item.idempleadotarea}}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 feed-messages-container dragable" [draggable]="true" (dragstart)="arrastrado($event)" (dragend)="finalizado($event)" style="padding-bottom: 25px;"  
+                    *ngFor='let item of cancelada | empleado_empleado_idempleadoDataFilter : filterQuery1 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery2 | estado_estado_idestadoDataFilter : filterQuery3;  let i = index'>
+                    <div class="card feed-message" >
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.ordentarea_ordentarea_idordentarea }}
+                                <span style="float: right;"> 
+                                    <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>
+                                    <button title='Desplegar más información' (click)="expandMessage(item)" class='btn btn-xs btn-default'><i class='fa fa-arrow-down'></i></button>
+                                </span>
+                            </h3>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Empleado: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.empleado_empleado_idempleado }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha Entrega: </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2">
+                                                <strong>{{ item.fechaEstimada | date: 'dd/MM/y' }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table" [ngClass]="{'hidden': !item.expanded}">
+                                    <tbody>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Fecha de Inicio: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.fechaInicio | date: 'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="card-subtitle mb-2 text-muted">Especificaciones: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>{{ item.especificaciones }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <button title='Ver Archivos' (click)='viewArchivo(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Archivos</button>
+                            <button title='Ver Estados' (click)='viewEmpleadotareaestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i> Estados</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+    </div> 
+
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Empleado Tarea</h2></div>
+                <table class='table table-striped' [mfData]='data | empleado_empleado_idempleadoDataFilter : filterQuery1 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery2 | estado_estado_idestadoDataFilter : filterQuery3' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                            <th colspan='1' class='text-left'>
+                                Filtrar por Empleado:
+                                <input class='form-control' [(ngModel)]='filterQuery1' />
+                            </th>
+                            <th colspan='2' class='text-left'>
+                                Filtrar por Tarea:
+                                <input class='form-control' [(ngModel)]='filterQuery2' />
+                            </th>
+                            <th colspan='2' class='text-left'>
+                                Filtrar por Estado:
+                                <input class='form-control' [(ngModel)]='filterQuery3' />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='empleado_empleado_idempleado'>Empleado</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='ordentarea_ordentarea_idordentarea'>Tarea</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='estado_estado_idestado'>Estado</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='ordentarea_especificaciones'>Especificaciones</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='fechaInicio'>Fecha Inicio</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaInicio'>Hora Inicio</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='fechaEstimada'>Fecha Estimada</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaEstimada'>Hora Estimada</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='fechaTermina'>Fecha Termina</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaTermina'>Hora Termina</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                
+                                <button title='Agregar Archivo' (click)='insertArchivo(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar Archivo Desde Web</button>
+                                <button title='Ver Archivos' (click)='viewArchivo(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Ver Archivos</button>
+                                <button title='Agregar Estado' (click)='insertEmpleadotareaestado(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar Estado</button>
+   
+                                <button title='Ver Tarea de Orden' (click)='viewOrdenTarea(item)' class='btn btn-sm btn-info'><i class='fa fa-eye'></i> Ver Tarea</button>
+                                <button title='Ver Estado' (click)='viewEmpleadotareaestado(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Ver Estados</button>
+                                <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-info'><i class='fa fa-edit'></i></button>
+                                <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button>
+                             
+                            </td>
+                            <td>{{ item.empleado_empleado_idempleado }}</td>
+                            <td>{{ item.ordentarea_ordentarea_idordentarea }}</td>
+                            <td [ngClass]="{'text-success': item.estado_estado_idestado === 'HECHA', 'text-danger': item.estado_estado_idestado === 'CANCELADA'}">{{ item.estado_estado_idestado }}</td>
+                            <td>{{ item.ordentarea_especificaciones }}</td>
+                            <td>{{ item.fechaInicio | date:'dd/MM/y' }}</td>
+                            <td>{{ item.horaInicio }}</td>
+                            <td>{{ item.fechaEstimada | date:'dd/MM/y' }}</td>
+                            <td>{{ item.horaEstimada }}</td>
+                            <td>{{ item.fechaTermina | date:'dd/MM/y' }}</td>
+                            <td>{{ item.horaTermina }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='5'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>
+-->

@@ -1,0 +1,239 @@
+<div class='widgets'>
+
+<div class='row'>
+        <ba-card title='Listado de Órdenes' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Órdenes</h2></div>
+                <table class='table table-striped'>
+
+                    <thead  *ngIf="!backpage">
+                        <tr>
+                            <td colspan='1'>
+                                Desde Fecha de Creación:
+                                <input class='form-control' #fechaDesde type="date"/>
+                            </td>
+                            <td colspan='1'>
+                                Hasta Fecha de Creación:
+                                <input class='form-control' #fechaHasta type="date"/>
+                            </td>
+                            <td colspan='3'>
+                                <br>
+                                <button class='btn btn-sm btn-info' (click)='filtrarFechas(fechaDesde.value, fechaHasta.value)' >Filtrar por Fechas</button>
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <thead>
+                        <tr>
+                            <th class='text-left'>
+                                Filtrar por Estado:
+                                <select class='form-control' name="estado" id="estado" [(ngModel)]='filterQuery6'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{estado.nombre}}" *ngFor="let estado of _estado">{{estado.nombre}}</option>
+                                </select>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Cliente:
+                                <select class='form-control' name="cliente" id="cliente" [(ngModel)]='filterQuery5'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{cliente.persona_persona_idpersona}}" *ngFor="let cliente of _cliente">{{cliente.persona_persona_idpersona}}</option>
+                                </select>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Fecha de Creación:
+                                <input class='form-control' [(ngModel)]='filterQuery1' type="date"/>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Fecha Estimada de Entrega:
+                                <input class='form-control' [(ngModel)]='filterQuery2' type="date" />
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Fecha Real de Entrega:
+                                <input class='form-control' [(ngModel)]='filterQuery3'  type="date"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan='5'>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+
+
+    <div class='row'>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 feed-messages-container" style="padding-bottom: 25px;"  *ngFor='let item of data | fechaDataFilter : filterQuery1 | fechaEntregaEstimadaDataFilter : filterQuery2 | fechaEntregaRealDataFilter : filterQuery3 | cliente_cliente_idclienteDataFilter : filterQuery5 | estado_estado_idestadoDataFilter : filterQuery6;  let i = index'>
+            <div class="card feed-message" >
+                <div class="card-body">
+                    <h3 class="card-title">Folio: {{ item.idorden }}
+                        <span style="float: right;"> 
+                            <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-xs btn-info'><i class='fa fa-edit'></i></button>
+                            <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>
+                            <button title='Desplegar más información' (click)="expandMessage(item)" class='btn btn-xs btn-default'><i class='fa fa-arrow-down'></i></button>
+                        </span>
+                    </h3>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="card-subtitle mb-2">
+                                        {{ item.estado_estado_idestado }}
+                                        <button title='Ver Estados' (click)='viewOrdenestado(item)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="card-subtitle mb-2 text-muted">Cliente: </td>
+                                </tr>
+                                <tr>
+                                    <td>{{ item.cliente_cliente_idcliente }} <strong>{{ item.cliente_razonsocial }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="card-subtitle mb-2 text-muted">Total: </td>
+                                </tr>
+                                <tr>
+                                    <td>{{ item.total | currency: 'MXN' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="card-subtitle mb-2 text-muted">Fecha de Entrega: </td>
+                                </tr>
+                                <tr>
+                                    <td>{{ item.fechaEntregaEstimada | date:'dd/MM/y' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card" style="margin-bottom:20px;" [ngClass]="{'hidden': item.expanded}">
+                        <div class="card-header">
+                            Productos  
+                            <button title='Agregar Producto' (click)='insertOrdenproducto(item)' type="button" class="btn btn-xs btn-success"> <i class="ion-plus-round"></i></button>
+                            <button title='Ver Productos' (click)='viewOrdenproducto(item)' type="button" class="btn btn-xs btn-warning"> <i class="ion-eye"></i></button>
+                        </div>
+                        
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-dark" *ngFor='let producto of data[i].ordenproducto;  let c = index' >
+                                {{ producto.producto_producto_idproducto }}  - <strong>{{ producto.precio | currency: 'MXN'}}</strong> 
+                                <div class="bot-links">
+                                    <p style="display: block; clear: both;">
+                                        <span class="card-subtitle mb-2 text-muted">Tareas: </span>  
+                                        <button title='Agregar Tarea' (click)='insertOrdentarea(producto)' class='btn btn-xs btn-success'><i class='fa fa-plus'></i></button>
+                                        <button title='Ver Tareas' (click)='viewOrdentarea(producto)' class='btn btn-xs btn-warning'><i class='fa fa-eye'></i></button>
+                                    </p>
+                                    <a (click)="insertEmpleadotarea(tarea)" [ngClass]="{'bg-success': tarea.estado_estado_idestado === 'HECHA',
+                                        'bg-info': tarea.estado_estado_idestado === 'POR HACERSE',
+                                        'bg-primary': tarea.estado_estado_idestado === 'TRABAJANDO',
+                                        'bg-warning': tarea.estado_estado_idestado === 'FINALIZADA',
+                                        'bg-danger': tarea.estado_estado_idestado === 'CANCELADA'}"
+                                        *ngFor='let tarea of data[i].ordenproducto[c].tareas;  let x = index' style="margin:0 2px 2px 0;">
+                                        
+                                         {{ tarea.tarea_tarea_idtarea }}
+                                         
+                                         <span [ngClass]="{'text-success': empleado.estado_estado_idestado === 'HECHA', 
+                                                            'text-info': empleado.estado_estado_idestado === 'POR HACERSE', 
+                                                            'text-primary': empleado.estado_estado_idestado === 'TRABAJANDO'}" 
+                                                            style="padding: 1px 2px; margin:1px 2px; background-color: white; color: gray;" 
+                                                            *ngFor='let empleado of data[i].ordenproducto[c].tareas[x].empleadotarea;  let e = index'>
+                                             {{ empleado.empleado_empleado_idempleado }}
+                                         </span>
+                                         
+                                    </a> 
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card" [ngClass]="{'hidden' : item.expanded}">
+                        <div class="card-header" >
+                            Abonos 
+                            <button title='Agregar Abono' (click)='insertAbono(item)' type="button" class="btn btn-xs btn-success"> <i class="ion-plus-round"></i></button> 
+                            <button title='Ver Abonos' (click)='viewAbono(item)' type="button" class="btn btn-xs btn-warning"> <i class="ion-eye"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Abonado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor='let abono of data[i].abonos;  let a = index'>
+                                        <td>{{ abono.fecha | date:'dd/MM/y' }}</td>
+                                        <td>{{ abono.montoPagado | currency: 'MXN' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" [ngClass]="{'hidden' : item.expanded}">
+                        <div class="card-header">
+                            Totales
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>Subtotal: </td>
+                                        <td>{{ item.subtotal | currency: 'MXN' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total: </td>
+                                        <td>{{ item.total | currency: 'MXN' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Abonado: </td>
+                                        <td>{{ item.abonado | currency: 'MXN' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Adeudando: </td>
+                                        <td>{{ item.adeudo | currency: 'MXN' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Facturar: </td>
+                                        <td>{{ item.factura ? 'Si' : 'No' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card" [ngClass]="{'hidden' : item.expanded}">
+                        <div class="card-header">
+                            Comentarios
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-dark">
+                                {{ item.comentarios }}
+                            </li>
+                        </ul>
+                    </div>
+                    <hr>
+
+                    <button *ngIf="item.estado_estado_idestado === 'PAGADO ENTREGADO'" title='Finalizar Orden' (click)='finalizarOrden(item)' class='btn btn-xs btn-success'><i class='fa fa-check-square'></i> Finalizar</button>
+                    <button  *ngIf="item.estado_estado_idestado === 'PAGADO SIN ENTREGAR' || item.estado_estado_idestado === 'REALIZADO SIN ENTREGAR'" title='Entregar Orden' (click)='entregarOrden(item)' class='btn btn-xs btn-info'><i class='fa fa-check'></i> Entregar</button>
+                    <button title='Imprimir Orden' (click)='printOrden(item)' class='btn btn-xs btn-primary'><i class='fa fa-print'></i> Imprimir</button>
+                </div>
+            </div>
+        </div>
+                              
+    </div>
+
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2'>
+            <button (click)='descargarCSV(data, "Reporte de Órdenes", true)' class='btn btn-success'><i class='fa fa-excel'></i> Descargar como CSV</button>
+        </div>
+        <div class='col-sm-2'>
+            <button title='Imprimir Reporte' (click)='printReporte(data)' class='btn btn-info'><i class='fa fa-print'></i> Imprimir Reporte</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+
+</div>

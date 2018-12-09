@@ -1,0 +1,63 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Salidas de Stock</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Salidas de Stock">
+            <div class="form-group row" [ngClass]="{'has-error': (!ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched), 'has-success': (ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched)}">
+              <label for="inputordentarea_idordentareaAC" class="col-sm-3 form-control-label">Tarea de Orden</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="ordentarea_idordentarea" [formControl]="ordentarea_idordentareaAC" class="form-control" id="inputordentarea_idordentareaAC" required>
+                 <option value="{{item.idordentarea}}" *ngFor="let item of _ordentarea">{{item.folio}} - {{item.tarea_tarea_idtarea}} - {{item.cliente}} - {{item.especificaciones}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='ordentareaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!stock_idstockAC.valid && stock_idstockAC.touched), 'has-success': (stock_idstockAC.valid && stock_idstockAC.touched)}">
+              <label for="inputstock_idstockAC" class="col-sm-3 form-control-label">Producto en Stock</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="stock_idstock" [formControl]="stock_idstockAC" class="form-control" id="inputstock_idstockAC" required>
+                 <option value="{{item.idstock}}" *ngFor="let item of _stock">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='stockAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!cantidadAC.valid && cantidadAC.touched), 'has-success': (cantidadAC.valid && cantidadAC.touched)}">
+              <label for="inputcantidadAC" class="col-sm-3 form-control-label">Cantidad Restada a Stock</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="cantidad" [formControl]="cantidadAC" type="number" maxlength='5' class="form-control" id="inputcantidadAC" placeholder="Cantidad Restada a Stock" required>
+              </div>
+            </div>            
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaAC.valid && fechaAC.touched), 'has-success': (fechaAC.valid && fechaAC.touched)}">
+              <label for="inputfechaAC" class="col-sm-3 form-control-label">Fecha</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fecha" [formControl]="fechaAC" type="date"  class="form-control" id="inputfechaAC" placeholder="Fecha" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaAC.valid && horaAC.touched), 'has-success': (horaAC.valid && horaAC.touched)}">
+              <label for="inputhoraAC" class="col-sm-3 form-control-label">Hora</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="hora" [formControl]="horaAC" type="time"  class="form-control" id="inputhoraAC" placeholder="Hora" required>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

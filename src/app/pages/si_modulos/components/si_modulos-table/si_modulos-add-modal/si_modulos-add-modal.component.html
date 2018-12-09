@@ -1,0 +1,29 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Módulos</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Módulos">
+            <div class="form-group row" [ngClass]="{'has-error': (!nombreAC.valid && nombreAC.touched), 'has-success': (nombreAC.valid && nombreAC.touched)}">
+              <label for="inputnombreAC" class="col-sm-3 form-control-label">Nombre</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="nombre" [formControl]="nombreAC" type="text" maxlength='45' class="form-control" id="inputnombreAC" placeholder="Nombre" >
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

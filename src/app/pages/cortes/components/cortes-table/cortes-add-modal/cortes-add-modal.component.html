@@ -1,0 +1,52 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Corte</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Corte">
+            <div class="form-group row" [ngClass]="{'has-error': (!montoInicialAC.valid && montoInicialAC.touched), 'has-success': (montoInicialAC.valid && montoInicialAC.touched)}">
+              <label for="inputmontoInicialAC" class="col-sm-3 form-control-label">Monto Inicial</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="montoInicial" [formControl]="montoInicialAC" type="number"  class="form-control" id="inputmontoInicialAC" placeholder="Monto Inicial" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!inicia_idempleadoAC.valid && inicia_idempleadoAC.touched), 'has-success': (inicia_idempleadoAC.valid && inicia_idempleadoAC.touched)}">
+              <label for="inputinicia_idempleadoAC" class="col-sm-3 form-control-label">Cajero Inicia</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="inicia_idempleado" [formControl]="inicia_idempleadoAC" class="form-control" id="inputinicia_idempleadoAC" required>
+                 <option value="{{item.idempleado}}" *ngFor="let item of _empleado">{{item.persona_persona_idpersona}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='empleadoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaIniciaAC.valid && fechaIniciaAC.touched), 'has-success': (fechaIniciaAC.valid && fechaIniciaAC.touched)}">
+              <label for="inputfechaIniciaAC" class="col-sm-3 form-control-label">Fecha de Corte Inicial</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaInicia" [formControl]="fechaIniciaAC" type="date"  class="form-control" id="inputfechaIniciaAC" placeholder="Fecha de Corte Inicial" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaIniciaAC.valid && horaIniciaAC.touched), 'has-success': (horaIniciaAC.valid && horaIniciaAC.touched)}">
+              <label for="inputhoraIniciaAC" class="col-sm-3 form-control-label">Hora de Corte Inicial</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaInicia" [formControl]="horaIniciaAC" type="time"  class="form-control" id="inputhoraIniciaAC" placeholder="Hora de Corte Inicial" required>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

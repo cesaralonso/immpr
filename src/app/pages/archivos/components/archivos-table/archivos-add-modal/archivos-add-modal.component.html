@@ -1,0 +1,54 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Archivo</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Archivo">
+            <div class="form-group row" [ngClass]="{'has-error': (!ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched), 'has-success': (ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched)}">
+              <label for="inputordentarea_idordentareaAC" class="col-sm-3 form-control-label">Tarea</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="ordentarea_idordentarea" [formControl]="ordentarea_idordentareaAC" class="form-control" id="inputordentarea_idordentareaAC" required>
+                 <option value="{{item.idordentarea}}" *ngFor="let item of _ordentarea">{{item.tarea_tarea_idtarea}} - {{item.ordenproducto_ordenproducto_idordenproducto}} - {{item.cliente}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='ordentareaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!urlAC.valid && urlAC.touched), 'has-success': (urlAC.valid && urlAC.touched)}">
+              <label for="inputurlAC" class="col-sm-3 form-control-label">Url</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="url" [formControl]="urlAC" type="text" maxlength='255' class="form-control" id="inputurlAC" placeholder="Url" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!tipoAC.valid && tipoAC.touched), 'has-success': (tipoAC.valid && tipoAC.touched)}">
+              <label for="inputtipoAC" class="col-sm-3 form-control-label">Tipo de Archivo</label>
+              <div class="col-sm-9">
+                <select name="" class="form-control" id="inputtipoAC"  [(ngModel)]="tipo" [formControl]="tipoAC" type="text" required>
+                  <option value="application/pdf">PDF</option>
+                  <option value="application/xml">XML</option>
+                  <option value="image/jpeg">JPG</option>
+                  <option value="image/png">PNG</option>
+                  <option value="image/gif">GIF</option>
+                  <option value="application/vnd.openxmlformats-officedocument.pres">POWER POINT</option>
+                  <option value="application/vnd.openxmlformats-officedocument.pres">WORD</option>
+                </select>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Orden Tarea</h2></div>
+                <table class='table table-striped' [mfData]='data | ordenproducto_ordenproducto_idordenproductoDataFilter : filterQuery1 | especificacionesDataFilter : filterQuery2 | tarea_tarea_idtareaDataFilter : filterQuery3 | clienteDataFilter : filterQuery4 | estado_estado_idestadoDataFilter : filterQuery5' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                            <th colspan='2' class='text-left'>
+                                Filtrar por Producto:
+                                <select class='form-control' name="producto" id="producto" [(ngModel)]='filterQuery1'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{producto.nombre}}" *ngFor="let producto of _producto">{{producto.nombre}}</option>
+                                </select>
+                            </th>
+                            <th colspan='3' class='text-left'>
+                                Filtrar por Tarea:
+                                <select class='form-control' name="tarea" id="tarea" [(ngModel)]='filterQuery3'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{tarea.nombre}}" *ngFor="let tarea of _tarea">{{tarea.nombre}}</option>
+                                </select>
+                            </th>
+                            <th colspan='3' class='text-left'>
+                                Filtrar por Especificaciones:
+                                <input class='form-control' [(ngModel)]='filterQuery2' />
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Cliente:
+                                <select class='form-control' name="cliente" id="cliente" [(ngModel)]='filterQuery4'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{cliente.persona_persona_idpersona}}" *ngFor="let cliente of _cliente">{{cliente.persona_persona_idpersona}}</option>
+                                </select>
+                            </th>
+                            <th class='text-left'>
+                                Filtrar por Estado:
+                                <select class='form-control' name="estado" id="estado" [(ngModel)]='filterQuery5'>
+                                    <option value="">NINGUNO</option>
+                                    <option value="{{estado.nombre}}" *ngFor="let estado of _estado">{{estado.nombre}}</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='tarea_tarea_idtarea'>Tarea</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='estado_estado_idestado'>Estado</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='cliente'>Cliente</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='ordenproducto_ordenproducto_idordenproducto'>Orden Producto</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='especificaciones'>Especificaciones</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='fechaInicio'>Fecha de Inicio</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='horaInicio'>Hora de Inicio</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='fechaTermina'>Fecha de Término</mfDefaultSorter>
+                            </th>
+                            <th style='width: 9%'>
+                                <mfDefaultSorter by='horaTermina'>Hora de Término</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                <div class='dropdown'>
+                                    <button class='btn btn-primary dropdown-toggle' type='button' id='dropdownAcciones' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                        Acciones 
+                                    </button>
+                                    <div class='dropdown-menu' aria-labelledby='dropdownAcciones'>
+                                        <button *ngIf="item.estado_estado_idestado === 'HECHA'" title='Validar y Finalizar' (click)='finalizarOrdenTarea(item)' class='btn btn-sm btn-default dropdown-item text-info'><i class='fa fa-check'></i> Validar y Finalizar</button>
+                                        <button *ngIf="item.estado_estado_idestado !== 'CANCELADA' && item.estado_estado_idestado !== 'FINALIZADA'" title='Cancelar' (click)='cancelarOrdenTarea(item)' class='btn btn-sm btn-default dropdown-item text-danger'><i class='fa fa-close'></i> Cancelar</button>
+                                        <button title='Agregar Archivo' (click)='insertArchivo(item)' class='btn btn-sm btn-default dropdown-item text-success'><i class='fa fa-plus'></i> Agregar Archivo Desde Web</button>
+                                        <button title='Ver Archivo' (click)='viewArchivo(item)' class='btn btn-sm btn-default dropdown-item text-warning'><i class='fa fa-eye'></i> Ver Archivos</button>
+                                        <button title='Agregar Empleado Tarea' (click)='insertEmpleadotarea(item)' class='btn btn-sm btn-default dropdown-item text-success'><i class='fa fa-plus'></i> Enlazar Empleado a Tarea</button>
+                                        <button title='Ver Empleado Tarea' (click)='viewEmpleadotarea(item)' class='btn btn-sm btn-default dropdown-item text-warning'><i class='fa fa-eye'></i> Ver Empleado Enlazado a Tarea</button>
+                                        
+                                      <div class='dropdown-divider'></div>
+                                      <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-default dropdown-item btn-default text-primary dropdown-item'><i class='fa fa-edit'></i> Editar </button>
+                                      <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-default dropdown-item btn-default text-danger dropdown-item'><i class='fa fa-trash'></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ item.tarea_tarea_idtarea }}</td>
+                            <td [ngClass]="{'text-success': item.estado_estado_idestado === 'HECHA', 'text-danger': item.estado_estado_idestado === 'CANCELADA'}">{{ item.estado_estado_idestado  }}</td>
+                            <td>{{ item.cliente  }}</td>
+                            <td>{{ item.ordenproducto_ordenproducto_idordenproducto }}</td>
+                            <td>{{ item.especificaciones  }}</td>
+                            <td>{{ item.fechaInicio | date:'dd/MM/y' }}</td>
+                            <td>{{ item.horaInicio  }}</td>
+                            <td>{{ item.fechaTermina | date:'dd/MM/y' }}</td>
+                            <td>{{ item.horaTermina  }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='10'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>

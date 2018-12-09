@@ -1,0 +1,46 @@
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Tickets</h2></div>
+                <table class='table table-striped' [mfData]='data' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 80%'>
+                                <mfDefaultSorter by='html'>Cuerpo</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                <button title='Ver Registradora' (click)='viewRegistradora(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Registradora</button>
+                                <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-info'><i class='fa fa-edit'></i></button>
+                                <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button>
+                            </td>
+                            <td><span>{{ item.html }}</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='5'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>

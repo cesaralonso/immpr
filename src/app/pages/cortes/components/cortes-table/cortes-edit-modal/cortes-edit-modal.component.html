@@ -1,0 +1,93 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Corte</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Corte">
+            <div class="form-group row" [ngClass]="{'has-error': (!montoInicialAC.valid && montoInicialAC.touched), 'has-success': (montoInicialAC.valid && montoInicialAC.touched)}">
+              <label for="inputmontoInicialAC" class="col-sm-3 form-control-label">Monto Inicial</label>
+              <div class="col-sm-9">
+                <input [disabled]="true1" [(ngModel)]="montoInicial" [formControl]="montoInicialAC" type="number"  class="form-control" id="inputmontoInicialAC" placeholder="Monto Inicial" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!montoFinalAC.valid && montoFinalAC.touched), 'has-success': (montoFinalAC.valid && montoFinalAC.touched)}">
+              <label for="inputmontoFinalAC" class="col-sm-3 form-control-label">Monto Final</label>
+              <div class="col-sm-9">
+                <input (change)="calcularMontoAcumulado()" [(ngModel)]="montoFinal" [formControl]="montoFinalAC" type="number"  class="form-control" id="inputmontoFinalAC" placeholder="Monto Final" required >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!gananciaAC.valid && gananciaAC.touched), 'has-success': (gananciaAC.valid && gananciaAC.touched)}">
+              <label for="inputgananciaAC" class="col-sm-3 form-control-label">Monto Ganado</label>
+              <div class="col-sm-9">
+                <h2 [ngClass]="{'text-success': montoEsperado === ganancia, 'text-danger': montoEsperado > ganancia, 'text-warning': montoEsperado < ganancia}">{{ ganancia | currency: 'MXN'}}</h2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputgananciaAC" class="col-sm-3 form-control-label">Monto Esperado por Sistema</label>
+              <div class="col-sm-9">
+                <h2>{{ montoEsperado | currency: 'MXN'}}</h2>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!inicia_idempleadoAC.valid && inicia_idempleadoAC.touched), 'has-success': (inicia_idempleadoAC.valid && inicia_idempleadoAC.touched)}">
+              <label for="inputinicia_idempleadoAC" class="col-sm-3 form-control-label">Cajero Inicia</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="inicia_idempleado" [formControl]="inicia_idempleadoAC" class="form-control" id="inputinicia_idempleadoAC" required>
+                 <option value="{{item.idempleado}}" *ngFor="let item of _empleado">{{item.persona_persona_idpersona}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='empleadoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!finaliza_idempleadoAC.valid && finaliza_idempleadoAC.touched), 'has-success': (finaliza_idempleadoAC.valid && finaliza_idempleadoAC.touched)}">
+              <label for="inputfinaliza_idempleadoAC" class="col-sm-3 form-control-label">Cajero Finaliza</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="finaliza_idempleado" [formControl]="finaliza_idempleadoAC" class="form-control" id="inputfinaliza_idempleadoAC"  required>
+                 <option value="{{item.idempleado}}" *ngFor="let item of _empleado">{{item.persona_persona_idpersona}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='empleadoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaIniciaAC.valid && fechaIniciaAC.touched), 'has-success': (fechaIniciaAC.valid && fechaIniciaAC.touched)}">
+              <label for="inputfechaIniciaAC" class="col-sm-3 form-control-label">Fecha de Corte Inicial</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaInicia" [formControl]="fechaIniciaAC" type="date"  class="form-control" id="inputfechaIniciaAC" placeholder="Fecha de Corte Inicial" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaIniciaAC.valid && horaIniciaAC.touched), 'has-success': (horaIniciaAC.valid && horaIniciaAC.touched)}">
+              <label for="inputhoraIniciaAC" class="col-sm-3 form-control-label">Hora de Corte Inicial</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaInicia" [formControl]="horaIniciaAC" type="time"  class="form-control" id="inputhoraIniciaAC" placeholder="Hora de Corte Inicial" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaFInalizaAC.valid && fechaFInalizaAC.touched), 'has-success': (fechaFInalizaAC.valid && fechaFInalizaAC.touched)}">
+              <label for="inputfechaFInalizaAC" class="col-sm-3 form-control-label">Fecha de Corte Final</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaFInaliza" [formControl]="fechaFInalizaAC" type="date"  class="form-control" id="inputfechaFInalizaAC" placeholder="Fecha de Corte Final" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaFinalizaAC.valid && horaFinalizaAC.touched), 'has-success': (horaFinalizaAC.valid && horaFinalizaAC.touched)}">
+              <label for="inputhoraFinalizaAC" class="col-sm-3 form-control-label">Hora de Corte Final</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaFinaliza" [formControl]="horaFinalizaAC" type="time"  class="form-control" id="inputhoraFinalizaAC" placeholder="Hora de Corte Final" required>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

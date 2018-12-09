@@ -1,0 +1,101 @@
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Empleado</h2></div>
+                <table class='table table-striped' [mfData]='data | fechaIngresoDataFilter : filterQuery1 | persona_persona_idpersonaDataFilter : filterQuery2 | area_area_idareaDataFilter : filterQuery3' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                            <th colspan='3' class='text-left'>
+                                Filtrar por Empleado:
+                                <input class='form-control' [(ngModel)]='filterQuery2' />
+                            </th>
+                            <th colspan='4' class='text-left'>
+                                Filtrar por Área:
+                                <input class='form-control' [(ngModel)]='filterQuery3' />
+                            </th>
+                            <th colspan='3' class='text-left'>
+                                Filtrar por Fecha de Ingreso:
+                                <input class='form-control' [(ngModel)]='filterQuery1' />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='area_area_idarea'>Área</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='persona_persona_idpersona'>Datos Personales</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='idlector'>ID de Lector</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='fechaIngreso'>Fecha de Ingreso</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='eficiencia'>Eficiencia Tiempo</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='si_user_si_user_idsi_user'>Usuario del Sistema</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaEntrada'>Hora de Entrada a Laborar</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaSalida'>Hora de Salida de Laborar</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaComidaInicia'>Hora de Inicio de Comida</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='horaComidaTermina'>Hora de Fin de Comida</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                <!--
+                                <button title='Agregar Checkout' (click)='insertCheckout(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar Checkout</button>
+                                <button title='Ver Checkout' (click)='viewCheckout(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Ver Checkout</button>
+                                <button title='Agregar Egreso' (click)='insertEgresoconcepto(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar Egreso</button>
+                                <button title='Ver Egreso' (click)='viewEgresoconcepto(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Ver Egreso</button>
+                                <button title='Agregar Empleado Tarea' (click)='insertEmpleadotarea(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar Tarea</button>
+                                <button title='Ver Empleado Tarea' (click)='viewEmpleadotarea(item)' class='btn btn-sm btn-warning'><i class='fa fa-eye'></i> Ver Tarea</button>
+                                -->
+                                <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-info'><i class='fa fa-edit'></i></button>
+                                <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button>
+                            </td>
+                            <td>{{ item.area_area_idarea }}</td>
+                            <td>{{ item.persona_persona_idpersona }}</td>
+                            <td>{{ item.idlector  }}</td>
+                            <td>{{ item.fechaIngreso | date:'dd/MM/y' }}</td>
+                            <td [ngClass]="{'text-success': item.eficiencia >79, 'text-danger': item.eficiencia < 51}">{{ item.eficiencia  }}</td>
+                            <td>{{ item.si_user_si_user_idsi_user }}</td>
+                            <td>{{ item.horaEntrada  }}</td>
+                            <td>{{ item.horaSalida  }}</td>
+                            <td>{{ item.horaComidaInicia  }}</td>
+                            <td>{{ item.horaComidaTermina  }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='5'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>

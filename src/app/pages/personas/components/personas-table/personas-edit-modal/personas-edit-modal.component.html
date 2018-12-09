@@ -1,0 +1,64 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Persona</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Persona">
+            <div class="form-group row" [ngClass]="{'has-error': (!nombreAC.valid && nombreAC.touched), 'has-success': (nombreAC.valid && nombreAC.touched)}">
+              <label for="inputnombreAC" class="col-sm-3 form-control-label">Nombre</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="nombre" [formControl]="nombreAC" type="text" maxlength='45' class="form-control" id="inputnombreAC" placeholder="Nombre" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!apellidoPaternoAC.valid && apellidoPaternoAC.touched), 'has-success': (apellidoPaternoAC.valid && apellidoPaternoAC.touched)}">
+              <label for="inputapellidoPaternoAC" class="col-sm-3 form-control-label">Apellido Paterno</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="apellidoPaterno" [formControl]="apellidoPaternoAC" type="text" maxlength='45' class="form-control" id="inputapellidoPaternoAC" placeholder="Apellido Paterno" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!emailPersonalAC.valid && emailPersonalAC.touched), 'has-success': (emailPersonalAC.valid && emailPersonalAC.touched)}">
+              <label for="inputemailPersonalAC" class="col-sm-3 form-control-label">Email Personal</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="emailPersonal" [formControl]="emailPersonalAC" type="text" maxlength='45' class="form-control" id="inputemailPersonalAC" placeholder="Email Personal" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!telefonoCasaAC.valid && telefonoCasaAC.touched), 'has-success': (telefonoCasaAC.valid && telefonoCasaAC.touched)}">
+              <label for="inputtelefonoCasaAC" class="col-sm-3 form-control-label">Teléfono Celular</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="telefonoCasa" [formControl]="telefonoCasaAC" type="text" maxlength='45' class="form-control" id="inputtelefonoCasaAC" placeholder="Teléfono de Casa" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!telefonoOficinaAC.valid && telefonoOficinaAC.touched), 'has-success': (telefonoOficinaAC.valid && telefonoOficinaAC.touched)}">
+              <label for="inputtelefonoOficinaAC" class="col-sm-3 form-control-label">Teléfono de Oficina</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="telefonoOficina" [formControl]="telefonoOficinaAC" type="text" maxlength='45' class="form-control" id="inputtelefonoOficinaAC" placeholder="Teléfono de Oficina" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!ciudad_idciudadAC.valid && ciudad_idciudadAC.touched), 'has-success': (ciudad_idciudadAC.valid && ciudad_idciudadAC.touched)}">
+              <label for="inputciudad_idciudadAC" class="col-sm-3 form-control-label">Ciudad</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="ciudad_idciudad" [formControl]="ciudad_idciudadAC" class="form-control" id="inputciudad_idciudadAC" required>
+                 <option value="{{item.idciudad}}" *ngFor="let item of _ciudad">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='ciudadAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@import "../../../theme/sass/conf/conf";
+
+.modal-buttons .btn {
+  margin-right: 20px;
+}
+
+.modal-content {
+  color: $dropdown-text;
+}
+/* Uploader Fix */
+.picture-group[_ngcontent-c9] i[_ngcontent-c9] {
+    background: transparent !important;
+    color: transparent !important;
+}

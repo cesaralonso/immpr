@@ -1,0 +1,88 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Egreso</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Egreso">
+            <div class="form-group row" [ngClass]="{'has-error': (!concepto_idconceptoAC.valid && concepto_idconceptoAC.touched), 'has-success': (concepto_idconceptoAC.valid && concepto_idconceptoAC.touched)}">
+              <label for="inputconcepto_idconceptoAC" class="col-sm-3 form-control-label">Concepto</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="concepto_idconcepto" [formControl]="concepto_idconceptoAC" class="form-control" id="inputconcepto_idconceptoAC" required>
+                 <option value="{{item.idconcepto}}" *ngFor="let item of _concepto">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='conceptoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaAC.valid && fechaAC.touched), 'has-success': (fechaAC.valid && fechaAC.touched)}">
+              <label for="inputfechaAC" class="col-sm-3 form-control-label">Fecha</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fecha" [formControl]="fechaAC" type="date"  class="form-control" id="inputfechaAC" placeholder="Fecha" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaAC.valid && horaAC.touched), 'has-success': (horaAC.valid && horaAC.touched)}">
+              <label for="inputhoraAC" class="col-sm-3 form-control-label">Hora</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="hora" [formControl]="horaAC" type="time"  class="form-control" id="inputhoraAC" placeholder="Hora" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!precioConIvaAC.valid && precioConIvaAC.touched), 'has-success': (precioConIvaAC.valid && precioConIvaAC.touched)}">
+              <label for="inputprecioConIvaAC" class="col-sm-3 form-control-label">Precio Por Pieza</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="precioConIva" [formControl]="precioConIvaAC" type="number"  class="form-control" id="inputprecioConIvaAC" placeholder="Precio Por Pieza" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!cantidadAC.valid && cantidadAC.touched), 'has-success': (cantidadAC.valid && cantidadAC.touched)}">
+              <label for="inputcantidadAC" class="col-sm-3 form-control-label">Cantidad</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="cantidad" [formControl]="cantidadAC" type="number" maxlength='4' class="form-control" id="inputcantidadAC" placeholder="Cantidad" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!subtotalAC.valid && subtotalAC.touched), 'has-success': (subtotalAC.valid && subtotalAC.touched)}">
+              <label for="inputsubtotalAC" class="col-sm-3 form-control-label">Subtotal</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="subtotal" [formControl]="subtotalAC" type="number"  class="form-control" id="inputsubtotalAC" placeholder="Subtotal" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!totalAC.valid && totalAC.touched), 'has-success': (totalAC.valid && totalAC.touched)}">
+              <label for="inputtotalAC" class="col-sm-3 form-control-label">Total Egresado</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="total" [formControl]="totalAC" type="number"  class="form-control" id="inputtotalAC" placeholder="Total Egresado" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!empleado_idempleadoAC.valid && empleado_idempleadoAC.touched), 'has-success': (empleado_idempleadoAC.valid && empleado_idempleadoAC.touched)}">
+              <label for="inputempleado_idempleadoAC" class="col-sm-3 form-control-label">Empleado Que Realiza</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="empleado_idempleado" [formControl]="empleado_idempleadoAC" class="form-control" id="inputempleado_idempleadoAC" required>
+                 <option value="{{item.idempleado}}" *ngFor="let item of _empleado">{{item.persona_persona_idpersona}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='empleadoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!comentariosAC.valid && comentariosAC.touched), 'has-success': (comentariosAC.valid && comentariosAC.touched)}">
+              <label for="inputcomentariosAC" class="col-sm-3 form-control-label">Comentarios</label>
+              <div class="col-sm-7">
+               <textarea [(ngModel)]="comentarios" [formControl]="comentariosAC" class="form-control" id="inputcomentariosAC">
+               </textarea>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Orden Tarea Estado</h2></div>
+                <table class='table table-striped' [mfData]='data | fechaDataFilter : filterQuery1 | estado_estado_idestadoDataFilter : filterQuery2 | ordentarea_ordentarea_idordentareaDataFilter : filterQuery3' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                            <th colspan='1' class='text-left'>
+                                Filtrar por Fecha:
+                                <input class='form-control' [(ngModel)]='filterQuery1' />
+                            </th>
+                            <th colspan='1' class='text-left'>
+                                Filtrar por Estado:
+                                <input class='form-control' [(ngModel)]='filterQuery2' />
+                            </th>
+                            <th colspan='2' class='text-left'>
+                                Filtrar por Tarea:
+                                <input class='form-control' [(ngModel)]='filterQuery3' />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 16%'>
+                                <mfDefaultSorter by='ordentarea_ordentarea_idordentarea'>Tarea</mfDefaultSorter>
+                            </th>
+                            <th style='width: 16%'>
+                                <mfDefaultSorter by='cliente'>Cliente</mfDefaultSorter>
+                            </th>
+                            <th style='width: 16%'>
+                                <mfDefaultSorter by='estadoscrum_estadoscrum_idestadoscrum'>Estado de Tarea</mfDefaultSorter>
+                            </th>
+                            <th style='width: 16%'>
+                                <mfDefaultSorter by='fecha'>Fecha</mfDefaultSorter>
+                            </th>
+                            <th style='width: 16%'>
+                                <mfDefaultSorter by='hora'>Hora</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-info'><i class='fa fa-edit'></i></button>
+                                <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button>
+                            </td>
+                            <td>{{ item.ordentarea_ordentarea_idordentarea }}</td>
+                            <td>{{ item.cliente }}</td>
+                            <td>{{ item.estadoscrum_estadoscrum_idestadoscrum }}</td>
+                            <td>{{ item.fecha | date:'dd/MM/y' }}</td>
+                            <td>{{ item.hora  }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='5'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>

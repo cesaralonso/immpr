@@ -1,0 +1,29 @@
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+   <a routerLink="/pages/dashboard" class="al-logo clearfix" style="line-height: 40px;"><span><img src="./assets/img/logo.png" alt="IMMPRENZZA8tercer" width="132"></span></a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+
+  <div class="search">
+    <i class="ion-ios-search-strong" (click)="buscarOrden(searchInput.value)"></i>
+    <input #searchInput id="searchInput" type="text" placeholder="Folio de Orden...">
+  </div>
+
+  <div class="corte">
+    <button *ngIf='openCaja' (click)='CorteAddModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Iniciar Caja</button>
+    <button *ngIf="closeCaja" title='Cerra Caja' (click)='CorteEditModalShow()' class='btn btn-success'><i class='fa fa-flag'></i> Cerrar Caja</button>
+  </div>                     
+
+  <div class="user-profile clearfix">
+    <div class="dropdown al-user-profile">
+      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+        <img src="./assets/img/theme/no-photo.png">
+      </a>
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+        <li *ngIf="!isAuth" class="dropdown-item"><a routerLink="/login"><i class="fa fa-user"></i>Accesa</a></li>
+        <li *ngIf="isAuth" class="dropdown-item"><a routerLink="/change-password"><i class="fa fa-cog"></i>Contraseña</a></li>
+        <li *ngIf="isAuth" class="dropdown-item"><a href  (click)="logout()" class="signout"><i class="fa fa-power-off"></i>Cerrar sesión</a></li>
+      </ul>
+    </div>
+    <ba-msg-center></ba-msg-center>
+  </div>
+</div>

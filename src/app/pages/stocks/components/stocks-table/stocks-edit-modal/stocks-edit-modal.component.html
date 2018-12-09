@@ -1,0 +1,35 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Stock</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Stock">
+            <div class="form-group row" [ngClass]="{'has-error': (!nombreAC.valid && nombreAC.touched), 'has-success': (nombreAC.valid && nombreAC.touched)}">
+              <label for="inputnombreAC" class="col-sm-3 form-control-label">Nombre del Producto o Material</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="nombre" [formControl]="nombreAC" type="text" maxlength='45' class="form-control" id="inputnombreAC" placeholder="Nombre del Producto o Material" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!cantidadAC.valid && cantidadAC.touched), 'has-success': (cantidadAC.valid && cantidadAC.touched)}">
+              <label for="inputcantidadAC" class="col-sm-3 form-control-label">Cantidad en Stock</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="cantidad" [formControl]="cantidadAC" type="number" maxlength='5' class="form-control" id="inputcantidadAC" placeholder="Cantidad en Stock" >
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

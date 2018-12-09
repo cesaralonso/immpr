@@ -1,0 +1,70 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Reportes</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Reportes">
+            <div class="form-group row" [ngClass]="{'has-error': (!nombreAC.valid && nombreAC.touched), 'has-success': (nombreAC.valid && nombreAC.touched)}">
+              <label for="inputnombreAC" class="col-sm-3 form-control-label">Nombre</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="nombre" [formControl]="nombreAC" type="text" maxlength='45' class="form-control" id="inputnombreAC" placeholder="Nombre" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!consultaAC.valid && consultaAC.touched), 'has-success': (consultaAC.valid && consultaAC.touched)}">
+              <label for="inputconsultaAC" class="col-sm-3 form-control-label">Consulta</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="consulta" [formControl]="consultaAC" type="text" maxlength='400' class="form-control" id="inputconsultaAC" placeholder="Consulta" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!camposAC.valid && camposAC.touched), 'has-success': (camposAC.valid && camposAC.touched)}">
+              <label for="inputcamposAC" class="col-sm-3 form-control-label">Campos a mostrar</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="campos" [formControl]="camposAC" type="text" maxlength='140' class="form-control" id="inputcamposAC" placeholder="Campos a mostrar" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!Modulo_idsi_moduloAC.valid && Modulo_idsi_moduloAC.touched), 'has-success': (Modulo_idsi_moduloAC.valid && Modulo_idsi_moduloAC.touched)}">
+              <label for="inputModulo_idsi_moduloAC" class="col-sm-3 form-control-label">Módulo</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="Modulo_idsi_modulo" [formControl]="Modulo_idsi_moduloAC" class="form-control" id="inputModulo_idsi_moduloAC" required>
+                 <option value="{{item.idsi_modulo}}" *ngFor="let item of _si_modulo">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='si_moduloAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!pfdAC.valid && pfdAC.touched), 'has-success': (pfdAC.valid && pfdAC.touched)}">
+              <label for="inputpfdAC" class="col-sm-3 form-check-label">Exportar a PDF</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="pfd" [formControl]="pfdAC" type="checkbox" class="form-check-input" id="inputpfdAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!excelAC.valid && excelAC.touched), 'has-success': (excelAC.valid && excelAC.touched)}">
+              <label for="inputexcelAC" class="col-sm-3 form-check-label">Exportar a Excel</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="excel" [formControl]="excelAC" type="checkbox" class="form-check-input" id="inputexcelAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!printAC.valid && printAC.touched), 'has-success': (printAC.valid && printAC.touched)}">
+              <label for="inputprintAC" class="col-sm-3 form-check-label">Impresión</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="print" [formControl]="printAC" type="checkbox" class="form-check-input" id="inputprintAC">
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

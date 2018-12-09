@@ -1,0 +1,87 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Producto</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Producto">
+            <div class="form-group row" [ngClass]="{'has-error': (!nombreAC.valid && nombreAC.touched), 'has-success': (nombreAC.valid && nombreAC.touched)}">
+              <label for="inputnombreAC" class="col-sm-3 form-control-label">Nombre</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="nombre" [formControl]="nombreAC" type="text" maxlength='55' class="form-control" id="inputnombreAC" placeholder="Nombre" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!area_idareaAC.valid && area_idareaAC.touched), 'has-success': (area_idareaAC.valid && area_idareaAC.touched)}">
+              <label for="inputarea_idareaAC" class="col-sm-3 form-control-label">Área</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="area_idarea" [formControl]="area_idareaAC" class="form-control" id="inputarea_idareaAC" required>
+                 <option value="{{item.idarea}}" *ngFor="let item of _area">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='areaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!formula_idformulaAC.valid && formula_idformulaAC.touched), 'has-success': (formula_idformulaAC.valid && formula_idformulaAC.touched)}">
+              <label for="inputformula_idformulaAC" class="col-sm-3 form-control-label">Fórmula</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="formula_idformula" [formControl]="formula_idformulaAC" class="form-control" id="inputformula_idformulaAC" required>
+                 <option value="{{item.idformula}}" *ngFor="let item of _formula">{{item.formula}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='formulaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!duracionEstimadaAC.valid && duracionEstimadaAC.touched), 'has-success': (duracionEstimadaAC.valid && duracionEstimadaAC.touched)}">
+              <label for="inputduracionEstimadaAC" class="col-sm-3 form-control-label">Duración Estimada en Hrs.</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="duracionEstimada" [formControl]="duracionEstimadaAC" type="number"  class="form-control" id="inputduracionEstimadaAC" placeholder="Duración Estimada en Hrs." >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!precioPublicoAC.valid && precioPublicoAC.touched), 'has-success': (precioPublicoAC.valid && precioPublicoAC.touched)}">
+              <label for="inputprecioPublicoAC" class="col-sm-3 form-control-label">Precio Para Público</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="precioPublico" [formControl]="precioPublicoAC" type="number"  class="form-control" id="inputprecioPublicoAC" placeholder="Precio Para Público" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!precioMayoreoAC.valid && precioMayoreoAC.touched), 'has-success': (precioMayoreoAC.valid && precioMayoreoAC.touched)}">
+              <label for="inputprecioMayoreoAC" class="col-sm-3 form-control-label">Precio Para Mayoreo</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="precioMayoreo" [formControl]="precioMayoreoAC" type="number"  class="form-control" id="inputprecioMayoreoAC" placeholder="Precio Para Mayoreo" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!precioMaquilaAC.valid && precioMaquilaAC.touched), 'has-success': (precioMaquilaAC.valid && precioMaquilaAC.touched)}">
+              <label for="inputprecioMaquilaAC" class="col-sm-3 form-control-label">Precio Para Maquila</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="precioMaquila" [formControl]="precioMaquilaAC" type="number"  class="form-control" id="inputprecioMaquilaAC" placeholder="Precio Para Maquila" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!extraPorAC.valid && extraPorAC.touched), 'has-success': (extraPorAC.valid && extraPorAC.touched)}">
+              <label for="inputextraPorAC" class="col-sm-3 form-control-label">Costo Extra Por</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="extraPor" [formControl]="extraPorAC" type="text" maxlength='45' class="form-control" id="inputextraPorAC" placeholder="Costo Extra Por" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!extraPrecioAC.valid && extraPrecioAC.touched), 'has-success': (extraPrecioAC.valid && extraPrecioAC.touched)}">
+              <label for="inputextraPrecioAC" class="col-sm-3 form-control-label">Costo Extra</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="extraPrecio" [formControl]="extraPrecioAC" type="number"  class="form-control" id="inputextraPrecioAC" placeholder="Costo Extra" >
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

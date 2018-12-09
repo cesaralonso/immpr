@@ -1,0 +1,85 @@
+<!--
+<ul class="al-msg-center clearfix">
+  <li class="dropdown">
+    <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-bell-o"></i><span>{{ totalNoLeidas }}</span>
+
+      <div class="notification-ring"></div>
+    </a>
+
+    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
+      <i class="dropdown-arr"></i>
+
+      <div class="header clearfix">
+        <strong>Notificaciones</strong>
+        <a ng-href="" (click)="marcarComoLeidas()">Marcar todas como leidas</a>
+      </div>
+      <div class="msg-list">
+        <a *ngFor="let msg of recibidas" href class="clearfix">
+          <div class="img-area">
+            {{ msg.remitente}}
+          </div>
+          <div class="msg-area">
+            <div [ngClass]="{'text-success': !msg.leida}">{{ msg.mensaje }}</div>
+            <span>{{ msg.created_at | date: 'dd/MM/y hh:mm:ss' }}</span>
+          </div>
+        </a>
+      </div>
+      <a routerLink="/pages/alertas" href>Ver todas</a>
+    </div>
+  </li>
+
+</ul>
+-->
+
+
+
+<ul class="al-msg-center clearfix">
+  <li class="dropdown">
+    <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-bell-o"></i><span id="totalNoLeidas">{{ totalNoLeidas }}</span>
+
+      <div class="notification-ring"></div>
+    </a>
+
+    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
+      <i class="dropdown-arr"></i>
+
+      <div class="header clearfix">
+        <strong>Notificaciones</strong>
+        <a ng-href="" (click)="marcarComoLeidas()">Marcar todas como leidas</a>
+      </div>
+      <div class="msg-list" id="alertas">
+        <a [routerLink]="msg.tipoalerta_tipoalerta_idtipoalerta === 'TAREA' ? ['/pages/empleadotareas/ordentarea/', msg.idordentarea] : ['/pages/alertas']"  
+        *ngFor="let msg of recibidas" 
+        href 
+        class="clearfix">
+          <div class="img-area">
+            {{ msg.remitente }}
+          </div>
+          <div class="msg-area">
+            <div [ngClass]="{'text-success': !msg.leida}">{{ msg.mensaje }}</div>
+            <span>{{ msg.created_at | date: 'dd/MM/y hh:mm:ss' }}</span>
+          </div>
+        </a>
+      </div>
+
+      <a routerLink="/pages/alertas" href>Ver todas</a>
+    </div>
+  </li>
+
+  <li class="dropdown">
+    <a href class="msg dropdown-toggle" id="msg-dd2" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-comments"></i><span>!</span>
+      <div class="notification-ring"></div>
+    </a>
+    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd2">
+      <i class="dropdown-arr"></i>
+      <div class="header clearfix">
+        <strong>Chat</strong>
+      </div>
+      <div id="chatcontent" class="bg-primary text-white m2 p1"></div>
+      <input type="text" [(ngModel)]="message" class="form-control" placeholder="Escribe..." (keyup.enter)="sendMessage()"/>
+    </div>
+  </li>
+</ul>

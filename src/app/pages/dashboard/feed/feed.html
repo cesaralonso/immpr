@@ -1,0 +1,99 @@
+<!--
+<div class="feed-messages-container">
+  <a [routerLink]="['/pages/ordens/', message.idorden]" class="feed-message" *ngFor="let message of feed" (click)="expandMessage(message)">
+    <div class="message-icon">
+      <img class="photo-icon" src="assets/images/nopaid.jpg">
+      <span class="sub-photo-icon" [ngClass]="message.type"></span>
+    </div>
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author">Empleado: <strong>{{ message.empleado }}</strong></span>
+      </div>
+      <div class="message-header">
+        <span class="author">Folio: <strong>{{ message.idorden }}</strong></span>
+      </div>
+      <div class="message-content line-clamp">
+        <span> <strong>{{ message.estado_estado_idestado }}</strong> </span>
+      </div>
+      <div class="preview">
+        <div class="post-time">
+          Días transcurridos desde creación: <strong>{{ message.dias_retraso }}</strong>
+        </div>
+      </div>
+      <div class="message-time">
+        <div class="post-time">
+          Fecha Estimada de Entrega de Orden: {{ message.fechaEntregaEstimada }}
+        </div>
+        <div class="ago-time">
+          Fecha de Creación de Orden: {{ message.fecha }}
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+
+
+            orden.idorden as orden_folio, 
+            orden.fecha as orden_created_at, 
+            orden.fechaEntregaEstimada as orden_fechaEntregaEstimada, 
+            es.nombre as orden_estado,  
+
+            t.nombre as tarea_nombre, 
+            p.nombre as empleadotarea_empleado, 
+            et.created_at as empleadotarea_created_at, 
+
+            (SELECT emte.created_at FROM empleadotareaestado as emte 
+            INNER JOIN empleadotarea as emt on emt.idempleadotarea = emte.empleadotarea_idempleadotarea
+            WHERE emt.idempleadotarea = et.idempleadotarea
+            ORDER BY emte.created_at DESC LIMIT 0,1) as empleadotareaestado_created_at,
+            
+            (SELECT ems.nombre FROM empleadotareaestado as emte 
+            INNER JOIN empleadotarea as emt on emt.idempleadotarea = emte.empleadotarea_idempleadotarea
+            INNER JOIN estadoscrum as ems on ems.idestadoscrum = emte.estadoscrum_idestadoscrum
+            WHERE emt.idempleadotarea = et.idempleadotarea
+            ORDER BY emte.created_at DESC LIMIT 0,1) as empleadotareaestado_estado
+
+-->
+
+<div class="feed-messages-container">
+  <a [routerLink]="['/pages/ordens/', empleadotarea.orden_folio]" class="feed-message" *ngFor="let empleadotarea of feed" (click)="expandMessage(empleadotarea)">
+    <div class="message-icon">
+      <img class="photo-icon" src="assets/images/nopaid.jpg">
+      <span class="sub-photo-icon"></span>
+    </div>
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author">Empleado: <strong>{{ empleadotarea.empleadotarea_empleado }}</strong></span>
+      </div>
+      <div class="message-content line-clamp">
+        <span>Tarea Nombre: <strong>{{ empleadotarea.tarea_nombre }}</strong> </span>
+      </div>
+      <div class="message-content line-clamp">
+        <span>Tarea Estado: <strong>{{ empleadotarea.empleadotareaestado_estado }}</strong> </span>
+      </div>
+      <div class="message-content line-clamp">
+        <span>Tarea Asignación: <strong>{{ empleadotarea.empleadotarea_created_at }}</strong> </span>
+      </div>
+      <div class="preview">
+        <div class="post-time">
+          Último Estado de Tarea: <strong>{{ empleadotarea.empleadotareaestado_created_at }}</strong>
+        </div>
+        <div class="post-time">
+         Orden Folio: <strong>{{ empleadotarea.orden_folio }}</strong>
+        </div>
+        <div class="ago-time">
+          Orden Estado: <strong>{{ empleadotarea.orden_estado }}</strong>
+        </div>
+      </div>
+      <div class="message-time">
+        <div class="post-time">
+          Fecha Estimada de Entrega de Orden: {{ empleadotarea.orden_fechaEntregaEstimada }}
+        </div>
+        <div class="ago-time">
+          Fecha de Creación de Orden: {{ empleadotarea.orden_created_at }}
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

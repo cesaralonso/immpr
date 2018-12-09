@@ -1,0 +1,98 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Empleado</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Empleado">
+            <div class="form-group row" [ngClass]="{'has-error': (!area_idareaAC.valid && area_idareaAC.touched), 'has-success': (area_idareaAC.valid && area_idareaAC.touched)}">
+              <label for="inputarea_idareaAC" class="col-sm-3 form-control-label">Área</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="area_idarea" [formControl]="area_idareaAC" class="form-control" id="inputarea_idareaAC" required>
+                 <option value="{{item.idarea}}" *ngFor="let item of _area">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='areaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!persona_idpersonaAC.valid && persona_idpersonaAC.touched), 'has-success': (persona_idpersonaAC.valid && persona_idpersonaAC.touched)}">
+              <label for="inputpersona_idpersonaAC" class="col-sm-3 form-control-label">Datos Personales</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="persona_idpersona" [formControl]="persona_idpersonaAC" class="form-control" id="inputpersona_idpersonaAC" required>
+                 <option value="{{item.idpersona}}" *ngFor="let item of _persona">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='personaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!idlectorAC.valid && idlectorAC.touched), 'has-success': (idlectorAC.valid && idlectorAC.touched)}">
+              <label for="inputidlectorAC" class="col-sm-3 form-control-label">ID de Lector</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="idlector" [formControl]="idlectorAC" type="number" maxlength='4' class="form-control" id="inputidlectorAC" placeholder="ID de Lector" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!fechaIngresoAC.valid && fechaIngresoAC.touched), 'has-success': (fechaIngresoAC.valid && fechaIngresoAC.touched)}">
+              <label for="inputfechaIngresoAC" class="col-sm-3 form-control-label">Fecha de Ingreso</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="fechaIngreso" [formControl]="fechaIngresoAC" type="date"  class="form-control" id="inputfechaIngresoAC" placeholder="Fecha de Ingreso" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!eficienciaAC.valid && eficienciaAC.touched), 'has-success': (eficienciaAC.valid && eficienciaAC.touched)}">
+              <label for="inputeficienciaAC" class="col-sm-3 form-control-label">Eficiencia 0-5</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="eficiencia" [formControl]="eficienciaAC" type="number"  class="form-control" id="inputeficienciaAC" placeholder="Eficiencia 0-5" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!si_user_idsi_userAC.valid && si_user_idsi_userAC.touched), 'has-success': (si_user_idsi_userAC.valid && si_user_idsi_userAC.touched)}">
+              <label for="inputsi_user_idsi_userAC" class="col-sm-3 form-control-label">Usuario del Sistema</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="si_user_idsi_user" [formControl]="si_user_idsi_userAC" class="form-control" id="inputsi_user_idsi_userAC" required>
+                 <option value="{{item.idsi_user}}" *ngFor="let item of _si_user">{{item.email}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='si_userAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaEntradaAC.valid && horaEntradaAC.touched), 'has-success': (horaEntradaAC.valid && horaEntradaAC.touched)}">
+              <label for="inputhoraEntradaAC" class="col-sm-3 form-control-label">Hora de Entrada a Laborar</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaEntrada" [formControl]="horaEntradaAC" type="time"  class="form-control" id="inputhoraEntradaAC" placeholder="Hora de Entrada a Laborar" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaSalidaAC.valid && horaSalidaAC.touched), 'has-success': (horaSalidaAC.valid && horaSalidaAC.touched)}">
+              <label for="inputhoraSalidaAC" class="col-sm-3 form-control-label">Hora de Salida de Laborar</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaSalida" [formControl]="horaSalidaAC" type="time"  class="form-control" id="inputhoraSalidaAC" placeholder="Hora de Salida de Laborar" required>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaComidaIniciaAC.valid && horaComidaIniciaAC.touched), 'has-success': (horaComidaIniciaAC.valid && horaComidaIniciaAC.touched)}">
+              <label for="inputhoraComidaIniciaAC" class="col-sm-3 form-control-label">Hora de Inicio de Comida</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaComidaInicia" [formControl]="horaComidaIniciaAC" type="time"  class="form-control" id="inputhoraComidaIniciaAC" placeholder="Hora de Inicio de Comida" >
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!horaComidaTerminaAC.valid && horaComidaTerminaAC.touched), 'has-success': (horaComidaTerminaAC.valid && horaComidaTerminaAC.touched)}">
+              <label for="inputhoraComidaTerminaAC" class="col-sm-3 form-control-label">Hora de Fin de Comida</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="horaComidaTermina" [formControl]="horaComidaTerminaAC" type="time"  class="form-control" id="inputhoraComidaTerminaAC" placeholder="Hora de Fin de Comida" >
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

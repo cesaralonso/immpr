@@ -1,0 +1,99 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar Permisos</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Permisos">
+            <div class="form-group row" [ngClass]="{'has-error': (!accesoAC.valid && accesoAC.touched), 'has-success': (accesoAC.valid && accesoAC.touched)}">
+              <label for="inputaccesoAC" class="col-sm-3 form-check-label">Acceso</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="acceso" [formControl]="accesoAC" type="checkbox" class="form-check-input" id="inputaccesoAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!Rol_idsi_rolAC.valid && Rol_idsi_rolAC.touched), 'has-success': (Rol_idsi_rolAC.valid && Rol_idsi_rolAC.touched)}">
+              <label for="inputRol_idsi_rolAC" class="col-sm-3 form-control-label">Rol</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="Rol_idsi_rol" [formControl]="Rol_idsi_rolAC" class="form-control" id="inputRol_idsi_rolAC" required>
+                 <option value="{{item.idsi_rol}}" *ngFor="let item of _si_rol">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='si_rolAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!Modulo_idsi_moduloAC.valid && Modulo_idsi_moduloAC.touched), 'has-success': (Modulo_idsi_moduloAC.valid && Modulo_idsi_moduloAC.touched)}">
+              <label for="inputModulo_idsi_moduloAC" class="col-sm-3 form-control-label">Módulo</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="Modulo_idsi_modulo" [formControl]="Modulo_idsi_moduloAC" class="form-control" id="inputModulo_idsi_moduloAC" required>
+                 <option value="{{item.idsi_modulo}}" *ngFor="let item of _si_modulo">{{item.nombre}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='si_moduloAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!readableAC.valid && readableAC.touched), 'has-success': (readableAC.valid && readableAC.touched)}">
+              <label for="inputreadableAC" class="col-sm-3 form-check-label">Lectura</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="readable" [formControl]="readableAC" type="checkbox" class="form-check-input" id="inputreadableAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!writeableAC.valid && writeableAC.touched), 'has-success': (writeableAC.valid && writeableAC.touched)}">
+              <label for="inputwriteableAC" class="col-sm-3 form-check-label">Escritura</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="writeable" [formControl]="writeableAC" type="checkbox" class="form-check-input" id="inputwriteableAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!updateableAC.valid && updateableAC.touched), 'has-success': (updateableAC.valid && updateableAC.touched)}">
+              <label for="inputupdateableAC" class="col-sm-3 form-check-label">Edición</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="updateable" [formControl]="updateableAC" type="checkbox" class="form-check-input" id="inputupdateableAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!deleteableAC.valid && deleteableAC.touched), 'has-success': (deleteableAC.valid && deleteableAC.touched)}">
+              <label for="inputdeleteableAC" class="col-sm-3 form-check-label">Eliminación</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="deleteable" [formControl]="deleteableAC" type="checkbox" class="form-check-input" id="inputdeleteableAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!read_ownAC.valid && read_ownAC.touched), 'has-success': (read_ownAC.valid && read_ownAC.touched)}">
+              <label for="inputread_ownAC" class="col-sm-3 form-check-label">Leer Propios</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="read_own" [formControl]="read_ownAC" type="checkbox" class="form-check-input" id="inputread_ownAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!write_ownAC.valid && write_ownAC.touched), 'has-success': (write_ownAC.valid && write_ownAC.touched)}">
+              <label for="inputwrite_ownAC" class="col-sm-3 form-check-label">Escribir Propios</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="write_own" [formControl]="write_ownAC" type="checkbox" class="form-check-input" id="inputwrite_ownAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!update_ownAC.valid && update_ownAC.touched), 'has-success': (update_ownAC.valid && update_ownAC.touched)}">
+              <label for="inputupdate_ownAC" class="col-sm-3 form-check-label">Editar Propios</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="update_own" [formControl]="update_ownAC" type="checkbox" class="form-check-input" id="inputupdate_ownAC">
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!delete_ownAC.valid && delete_ownAC.touched), 'has-success': (delete_ownAC.valid && delete_ownAC.touched)}">
+              <label for="inputdelete_ownAC" class="col-sm-3 form-check-label">Eliminar Propios</label>
+              <div class="col-sm-9">
+                <input [(ngModel)]="delete_own" [formControl]="delete_ownAC" type="checkbox" class="form-check-input" id="inputdelete_ownAC">
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

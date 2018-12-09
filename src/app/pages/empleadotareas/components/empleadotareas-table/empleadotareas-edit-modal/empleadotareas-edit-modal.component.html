@@ -1,0 +1,45 @@
+<div class="row mt-3">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="modal-content" style="overflow-y: initial !important">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Empleado Tarea</h4>
+          <button class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 65vh; overflow-y: auto;">
+          <ba-card cardTitle="Información Empleado Tarea">
+            <div class="form-group row" [ngClass]="{'has-error': (!empleado_idempleadoAC.valid && empleado_idempleadoAC.touched), 'has-success': (empleado_idempleadoAC.valid && empleado_idempleadoAC.touched)}">
+              <label for="inputempleado_idempleadoAC" class="col-sm-3 form-control-label">Empleado</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="empleado_idempleado" [formControl]="empleado_idempleadoAC" class="form-control" id="inputempleado_idempleadoAC" required>
+                 <option value="{{item.idempleado}}" *ngFor="let item of _empleado">{{item.persona_persona_idpersona}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='empleadoAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+            <div class="form-group row" [ngClass]="{'has-error': (!ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched), 'has-success': (ordentarea_idordentareaAC.valid && ordentarea_idordentareaAC.touched)}">
+              <label for="inputordentarea_idordentareaAC" class="col-sm-3 form-control-label">Tarea</label>
+              <div class="col-sm-7">
+               <select [(ngModel)]="ordentarea_idordentarea" [formControl]="ordentarea_idordentareaAC" class="form-control" id="inputordentarea_idordentareaAC" required>
+                 <option value="{{item.idordentarea}}" *ngFor="let item of _ordentarea">{{item.tarea_tarea_idtarea}}</option>
+               </select>
+              </div>
+              <div class='col-sm-2'>
+                <button (click)='ordentareaAddModalShow()' class='btn btn-primary'><i class='fa fa-plus'></i></button>
+              </div>
+            </div>
+          </ba-card>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger cancel-btn" (click)="close()">Cancelar</button>
+          <button [disabled]="!form.valid" class="btn btn-primary confirm-btn" (click)="onSubmit(form.value)">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

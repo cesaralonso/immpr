@@ -1,0 +1,87 @@
+<div class='widgets'>
+    <div class='row'>
+        <ba-card title='Listado' baCardClass='with-scroll' class='data-table-container'>
+            <div class='panel panel-default'>
+                <div class="panel-heading" *ngIf="backpage"><h2>Información de Egreso</h2></div>
+                <table class='table table-striped' [mfData]='data | fechaDataFilter : filterQuery1 | concepto_concepto_idconceptoDataFilter : filterQuery2' #mf='mfDataTable' [mfRowsOnPage]='rowsOnPage' [(mfSortBy)]='sortBy' [(mfSortOrder)]='sortOrder'>
+                    <thead>
+                        <tr>
+                            <th colspan='4' class='text-left'>
+                                Filtrar por Fecha:
+                                <input class='form-control' [(ngModel)]='filterQuery1' type="date"/>
+                            </th>
+                            <th colspan='5' class='text-left'>
+                                Filtrar por Concepto:
+                                <input class='form-control' [(ngModel)]='filterQuery2' />
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style='width: 20%'></th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='concepto_concepto_idconcepto'>Concepto</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='fecha'>Fecha</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='hora'>Hora</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='precioConIva'>Precio Por Pieza</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='cantidad'>Cantidad</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='subtotal'>Subtotal</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='total'>Total</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='empleado_empleado_idempleado'>Empleado Que Realiza</mfDefaultSorter>
+                            </th>
+                            <th style='width: 8%'>
+                                <mfDefaultSorter by='comentarios'>Comentarios</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let item of mf.data;  let i = index'>
+                            <td>
+                                <button title='Imprimir Egreso' (click)='printEgreso(item)' class='btn btn-sm btn-primary'><i class='fa fa-print'></i> Imprimir Egreso</button>
+                                <button title='Agregar a Stock' (click)='agregarAStock(item)' class='btn btn-sm btn-success'><i class='fa fa-plus'></i> Agregar a Stock</button>
+                                <button *ngIf='updateable' title='Editar Registro' (click)='editModalShow(item)' class='btn btn-sm btn-info'><i class='fa fa-edit'></i></button>
+                                <button *ngIf='deleteable' title='Eliminar Registro' (click)='onDeleteConfirm($event, item)' class='btn btn-sm btn-danger'><i class='fa fa-trash'></i></button>
+                            </td>
+                            <td>{{ item.concepto_concepto_idconcepto }}</td>
+                            <td>{{ item.fecha | date:'dd/MM/y' }}</td>
+                            <td>{{ item.hora  }}</td>
+                            <td>{{ item.precioConIva  }}</td>
+                            <td>{{ item.cantidad  }}</td>
+                            <td>{{ item.subtotal  }}</td>
+                            <td>{{ item.total  }}</td>
+                            <td>{{ item.empleado_empleado_idempleado }}</td>
+                            <td>{{ item.comentarios }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan='5'>
+                                <mfBootstrapPaginator [rowsOnPageSet]='[5,10,15,25,50,100]'></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class='row'>
+        <div class='col-sm-2' *ngIf="!backpage">
+            <button  *ngIf='writeable' (click)='addModalShow()'  class='btn btn-success'><i class='fa fa-plus'></i> Agregar</button>
+        </div>
+        <div class='col-sm-2' *ngIf="backpage">
+            <button (click)='backPage()' class='btn btn-primary'><i class='fa fa-arrow-left'></i> Regresar</button>
+        </div>
+    </div>
+</div>
